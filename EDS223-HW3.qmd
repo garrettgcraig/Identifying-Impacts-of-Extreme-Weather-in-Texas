@@ -55,16 +55,19 @@ options(scipen = 999)
 
 ```{r load-viirs}
 # Load night lights data for February 7, 2021 (pre-storm)
-# First unzip the data
-unzip("data/VNP46A1.zip", exdir = "data/VNP46A1")
+# First unzip the data if not already unzipped
+if (!dir.exists("data/VNP46A1")) {
+  unzip("data/VNP46A1.zip", exdir = "data")
+}
 
-# List all the tiles
-tiles_feb07 <- list.files("data/VNP46A1",
-                          pattern = "VNP46A1.A2021038.h08v0[56].001.*.tif$",
+# List all the tiles for Feb 7 (day 038) and Feb 16 (day 047)
+# Note: files are in nested VNP46A1/VNP46A1/ directory
+tiles_feb07 <- list.files("data/VNP46A1/VNP46A1",
+                          pattern = "VNP46A1\\.A2021038\\.h08v0[56]\\.001.*\\.tif$",
                           full.names = TRUE)
 
-tiles_feb16 <- list.files("data/VNP46A1",
-                          pattern = "VNP46A1.A2021047.h08v0[56].001.*.tif$",
+tiles_feb16 <- list.files("data/VNP46A1/VNP46A1",
+                          pattern = "VNP46A1\\.A2021047\\.h08v0[56]\\.001.*\\.tif$",
                           full.names = TRUE)
 
 # Read tiles as stars objects
@@ -128,20 +131,24 @@ tmap_mode("plot")
 map_feb07 <- tm_shape(feb07_houston) +
   tm_raster(title = "Light Intensity\n(nW cm⁻²sr⁻¹)",
             style = "cont",
-            palette = "YlOrRd") +
+            palette = "-Greys") +
   tm_layout(main.title = "February 7, 2021 (Pre-Storm)",
             main.title.size = 1.2,
             legend.outside = TRUE,
-            legend.outside.position = "right")
+            legend.outside.position = "right",
+            bg.color = "black",
+            legend.bg.color = "white")
 
 map_feb16 <- tm_shape(feb16_houston) +
   tm_raster(title = "Light Intensity\n(nW cm⁻²sr⁻¹)",
             style = "cont",
-            palette = "YlOrRd") +
+            palette = "-Greys") +
   tm_layout(main.title = "February 16, 2021 (During Storm)",
             main.title.size = 1.2,
             legend.outside = TRUE,
-            legend.outside.position = "right")
+            legend.outside.position = "right",
+            bg.color = "black",
+            legend.bg.color = "white")
 
 # Display side by side
 tmap_arrange(map_feb07, map_feb16, ncol = 2)
