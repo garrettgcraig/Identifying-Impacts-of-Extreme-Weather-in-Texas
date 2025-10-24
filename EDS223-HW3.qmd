@@ -49,6 +49,9 @@ library(patchwork)
 
 # Set options
 options(scipen = 999)
+
+# Set Census API key if you have one (optional but recommended)
+# census_api_key("YOUR_KEY_HERE", install = TRUE)
 ```
 
 ## Load and Process Night Lights Data
@@ -237,17 +240,25 @@ tm_compass(position = c("right", "top"))
 # First unzip the geodatabase
 unzip("data/ACS_2019_5YR_TRACT_48_TEXAS.gdb.zip", exdir = "data")
 
-# Read the geodatabase layer
-# Use st_layers() to see available layers, then read the appropriate one
+# Read the geometry layer
 census_tracts <- st_read("data/ACS_2019_5YR_TRACT_48_TEXAS.gdb",
                          layer = "ACS_2019_5YR_TRACT_48_TEXAS",
                          quiet = TRUE)
 
-# Select relevant variables (geometry and median household income)
-# B19013e1 is the field for median household income
+# Read the income data from the X19_INCOME layer (non-spatial table)
+income_data <- st_read("data/ACS_2019_5YR_TRACT_48_TEXAS.gdb",
+                       layer = "X19_INCOME",
+                       quiet = TRUE)
+
+# Join income data with geometry based on GEOID
+# The income layer uses just "GEOID" while geometry layer has "GEOID_Data"
+# We need to match GEOID from geometry with GEOID from income data
 census_tracts <- census_tracts %>%
+  left_join(st_drop_geometry(income_data), by = c("GEOID_Data" = "GEOID")) %>%
   select(GEOID, B19013e1) %>%
-  rename(median_income = B19013e1)
+  rename(median_income = B19013e1) %>%
+  # Filter out tracts with missing or zero income
+  filter(!is.na(median_income) & median_income > 0)
 
 # Reproject to EPSG:3083
 census_tracts <- st_transform(census_tracts, crs = 3083)
