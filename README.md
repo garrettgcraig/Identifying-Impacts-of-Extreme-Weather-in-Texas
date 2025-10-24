@@ -1,4 +1,4 @@
-# EDS223-HW3: Identifying Impacts of Extreme Weather
+# Identifying Impacts of Extreme Weather
 
 ## Overview
 
