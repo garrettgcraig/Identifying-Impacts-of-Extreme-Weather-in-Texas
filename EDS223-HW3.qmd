@@ -24,7 +24,7 @@ editor:
 ---
 
 ## Overview
-
+ 
 In February 2021, the state of Texas experienced unprecedented winter storms that caused widespread power outages across the state. This analysis uses remotely-sensed night lights data to estimate the number of homes in Houston that lost power during these storms. By combining satellite data from NASA's Visible Infrared Imaging Radiometer Suite (VIIRS), building footprint data from OpenStreetMap, and socioeconomic data from the US Census Bureau, we can identify which areas were affected and explore potential disparities in infrastructure impacts.
 
 ## Data Sources
