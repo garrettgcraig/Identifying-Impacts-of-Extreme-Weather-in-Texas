@@ -125,6 +125,8 @@ blackout_houston <- st_transform(blackout_houston, crs = 3083)
 ### Map: Night Lights Comparison
 
 ```{r map-night-lights}
+#| label: fig-night-lights
+#| fig-cap: "Comparison of night lights in Houston before (February 7, 2021) and during (February 16, 2021) the winter storms, showing dramatic reduction in light intensity during the blackout event"
 # Create side-by-side maps showing night lights before and after the storm
 # Crop to Houston area for visualization
 feb07_houston <- st_crop(feb07_lights, houston_sf)
@@ -210,6 +212,8 @@ cat("Number of homes affected by blackout:", num_affected_homes)
 ### Map: Houston Homes That Lost Power
 
 ```{r map-blackout-homes}
+#| label: fig-blackout-homes
+#| fig-cap: "Spatial distribution of residential buildings in Houston that lost power during the February 2021 winter storms, shown as red points within blackout areas (gray polygons)"
 # Create map showing affected residential buildings
 tm_shape(blackout_no_highways) +
   tm_polygons(col = "gray80",
@@ -284,6 +288,8 @@ census_tracts <- census_tracts %>%
 ### Map: Blackout Events by Census Tract
 
 ```{r map-census-tracts}
+#| label: fig-census-tracts
+#| fig-cap: "Census tracts in Houston classified by blackout status, with affected tracts shown in coral and unaffected tracts in light blue"
 # Create map showing which census tracts experienced blackouts
 # Crop to Houston area for better visualization
 houston_bbox <- st_bbox(blackout_houston)
@@ -308,6 +314,8 @@ tm_compass(position = c("right", "top"))
 ### Income Distribution Analysis
 
 ```{r income-analysis}
+#| label: fig-income-analysis
+#| fig-cap: "Distribution of median household income across Houston census tracts, comparing areas that experienced blackouts (coral) versus those that did not (light blue)"
 # Create plot comparing median household income distribution
 # for census tracts that experienced blackouts vs those that didn't
 
@@ -334,6 +342,8 @@ ggplot(census_houston_data, aes(x = median_income, fill = blackout_status)) +
 ## Results Summary
 
 ```{r summary-stats}
+#| label: tbl-income-summary
+#| tbl-cap: "Summary statistics of median household income for census tracts by blackout status"
 # Calculate and display key statistics:
 # - Number of homes affected
 # - Number of census tracts affected
