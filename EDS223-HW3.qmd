@@ -23,7 +23,14 @@ editor:
     wrap: sentence
 ---
 
-## INSERT README SCREENSHOT HERE
+## readme screenshot
+```{r}
+#| echo: false
+#| fig-cap: "Project README"
+#| out-width: "100%"
+knitr::include_graphics(here::here("readmescreenshot.jpg"))
+```
+
 
 ## Overview
  
