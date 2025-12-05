@@ -1,0 +1,174 @@
+---
+title: "When the Lights Went Out: Mapping Power Outages During the 2021 Texas Winter Storm"
+author: "Garrett Craig"
+date: "December 2025"
+format:
+  pdf:
+    toc: true
+    toc-location: left
+    toc-depth: 2
+    embed-resources: true
+    theme: cosmo
+    fig-width: 10
+    fig-height: 8
+    code-tools: false
+---
+
+## Introduction: A Crisis in the Dark
+
+In February 2021, an unprecedented winter storm paralyzed Texas, plunging millions into darkness during freezing temperatures. As the state's power grid failed under extreme demand, Houston—the nation's fourth-largest city—became a focal point of the crisis. But who was affected, and where?
+
+This analysis uses satellite imagery from space to answer that question. By analyzing nighttime light patterns captured by NASA's VIIRS (Visible Infrared Imaging Radiometer Suite) instrument, combined with geographic building data and socioeconomic information, I estimate which Houston homes lost power and explore whether certain communities bore a disproportionate burden.
+
+## Background: Why This Matters
+
+The February 2021 winter storm (nicknamed "Winter Storm Uri") was not just another weather event. It exposed critical vulnerabilities in Texas's isolated power grid and raised urgent questions about infrastructure resilience and equity. The official death toll reached 246 people across 77 Texas counties, though some estimates based on excess mortality suggest the true toll may have been significantly higher (Texas Department of State Health Services, 2021). The storm caused an estimated $130 billion in economic losses in Texas and left more than 4.5 million customers—over 10 million people—without power at the peak of the crisis (Busby et al., 2021).
+
+Environmental justice research consistently shows that low-income communities and communities of color often experience worse outcomes during disasters due to aging infrastructure, inadequate weatherization, and limited resources for recovery. Understanding the spatial distribution of power outages is crucial for:
+
+- **Emergency response planning**: Identifying vulnerable populations who need priority assistance
+- **Infrastructure investment**: Targeting grid improvements where they're needed most
+- **Climate adaptation**: Preparing for increasingly frequent extreme weather events as our climate changes
+
+Does this pattern of disproportionate impacts hold for power infrastructure failures during extreme cold events?
+
+## Data & Methods: A View from Above
+
+### Satellite Night Lights as a Proxy for Power
+
+NASA's VIIRS instrument aboard the Suomi NPP satellite captures Earth's nighttime lights every day at approximately 500-meter resolution. By comparing light intensity before and during the blackouts, we can identify areas that lost power—a technique increasingly used for disaster assessment worldwide.
+
+I analyzed two dates:
+
+- **February 7, 2021** (before the storm): A baseline showing normal nighttime illumination
+- **February 16, 2021** (during the peak): When Texas faced its worst power crisis
+
+A dramatic drop in light intensity (greater than 200 nW cm⁻² sr⁻¹) indicates a likely blackout area.
+
+### Connecting Satellite Data to Homes
+
+To translate satellite pixels into affected households, I combined the VIIRS data with:
+
+1. **OpenStreetMap (OSM) building footprints**: A crowdsourced database of 475,000+ residential structures in Houston
+2. **US Census Bureau data**: 2019 American Community Survey tract-level median household income for socioeconomic analysis
+
+The workflow involved:
+
+1. Creating a "blackout mask" from changes in night lights intensity
+2. Excluding highway corridors (to avoid false positives from reduced traffic)
+3. Identifying residential buildings within blackout zones
+4. Analyzing socioeconomic patterns across affected census tracts
+
+## Results: A City in the Dark
+
+### The Scope of the Blackout
+
+The satellite data reveals the staggering scale of the crisis. **168,874 residential buildings—35.5% of Houston's homes—lost power during the storm.** This affected **927 out of 1,104 census tracts**, meaning 84% of the city's neighborhoods experienced at least some blackouts.
+
+![Comparison of nighttime lights in Houston before (February 7, 2021) and during (February 16, 2021) the winter storm showing dramatic reduction in light intensity during the blackout event. The inset map shows Houston's location within Texas.](EDS223-HW3_files/figure-html/fig-night-lights-1.png)
+
+The before-and-after comparison is striking. Areas that glowed brightly on February 7 went dark by February 16, revealing the geographic footprint of grid failure. The visual evidence from space captures what millions of Texans experienced on the ground: a normally vibrant metropolitan area suddenly plunged into darkness.
+
+![Spatial distribution of residential buildings in Houston that lost power during the February 2021 winter storms. Affected homes shown as red points overlaying blackout areas in dark gray.](EDS223-HW3_files/figure-html/fig-blackout-homes-1.png)
+
+Each red point on this map represents a home without power—a family struggling to stay warm in subfreezing temperatures. The concentration of points reveals that blackouts were widespread across the metropolitan area, affecting both urban core and suburban neighborhoods.
+
+### The Socioeconomic Surprise
+
+Conventional wisdom suggests that low-income communities suffer more during infrastructure failures. However, this analysis reveals a counterintuitive pattern: **census tracts that experienced blackouts had higher median incomes than those that did not.**
+
+![Census tracts in Houston classified by blackout status, with affected tracts shown in coral and unaffected tracts in light blue.](EDS223-HW3_files/figure-html/fig-census-tracts-1.png)
+
+The coral-colored areas on this map show census tracts where power outages occurred. The widespread distribution indicates that blackouts didn't follow expected patterns of infrastructure inequality. Instead, they appear more closely tied to grid structure and demand patterns than to neighborhood wealth.
+
+![Distribution of median household income across Houston census tracts, comparing areas that experienced blackouts (coral) versus those that did not (light blue).](EDS223-HW3_files/figure-html/fig-income-analysis-1.png)
+
+The income distribution analysis provides quantitative confirmation of this unexpected pattern. Census tracts that lost power had a median household income of **$61,188** compared to **$51,583** in unaffected areas—a difference of nearly $10,000.
+
+**Summary Statistics:**
+
+| Blackout Status | Mean Income | Median Income | Number of Tracts |
+|-----------------|-------------|---------------|------------------|
+| Affected        | $61,188     | $59,345       | 927              |
+| Not Affected    | $51,583     | $48,221       | 177              |
+
+This runs counter to typical environmental justice patterns observed in other disaster contexts.
+
+## Discussion: What Does This Mean?
+
+### Unexpected Patterns
+
+Why would wealthier neighborhoods experience more blackouts? Several factors may explain this surprising result:
+
+**Urban geography**: Houston's lower-income neighborhoods are often concentrated closer to the urban core where infrastructure is older but also more interconnected and redundant. Wealthier suburban areas may have newer development but less grid redundancy. When the system faced unprecedented stress, these outlying areas may have been more vulnerable to cascading failures.
+
+**Energy demand**: Larger homes in higher-income areas consume more electricity for heating. During a crisis when the grid is operating at capacity, high-demand areas may have been selectively shut down through rolling blackouts to prevent total system collapse. The Electric Reliability Council of Texas (ERCOT) implemented controlled outages, which may have disproportionately affected high-consumption areas.
+
+**Data limitations**: Census tract boundaries don't align with electrical grid infrastructure. A single substation failure could affect both wealthy and poor households within the same tract, but tract-level income aggregation may mask this variation. Additionally, the analysis cannot distinguish between voluntary power conservation and involuntary outages.
+
+**Important caveat**: This finding doesn't mean wealthier households suffered more. While they may have lost power at higher rates, lower-income households facing the same outage duration likely experienced more severe consequences due to inadequate insulation, lack of backup heating, inability to relocate temporarily, and limited financial resources for recovery.
+
+### The Power of Remote Sensing
+
+This analysis demonstrates the value of satellite data for rapid disaster assessment. Within days of the storm, publicly available VIIRS imagery enabled quantification of impacts without waiting for ground surveys or utility company data releases. This approach is increasingly vital as climate change drives more frequent extreme weather events.
+
+Remote sensing also reveals spatial patterns invisible in traditional data sources. While utility companies knew the total number of outages, satellite data shows *where* those failures occurred, enabling geographic targeting of emergency response and future infrastructure investment. Emergency managers could use this approach to:
+
+- Identify neighborhoods needing priority assistance
+- Allocate warming centers and supplies geographically
+- Plan evacuation routes based on functional infrastructure
+- Document impacts for federal disaster declarations
+
+### Limitations and Future Directions
+
+Several important caveats apply to this analysis:
+
+**Measurement uncertainty**: Nighttime lights are an imperfect proxy for power outages. Commercial and industrial facilities contribute more light than residential homes, potentially biasing estimates. A dark area on satellite imagery might represent a large industrial facility rather than a residential neighborhood. The 200 nW cm⁻² sr⁻¹ threshold, while commonly used in the literature, is somewhat arbitrary and not specifically calibrated for Houston's urban characteristics.
+
+**Highway exclusion**: The 200-meter buffer around highways aims to remove false positives from reduced traffic (fewer cars on roads during the storm would reduce light without indicating power loss), but this distance is not empirically validated and may inadvertently exclude homes genuinely located near highways.
+
+**Temporal lag**: The 2019 Census income data predates the 2021 storm by two years. Houston's rapid development means neighborhood characteristics may have changed, though this is likely minor for established areas. However, economic impacts of the COVID-19 pandemic in 2020 may have altered local income distributions.
+
+**Aggregation bias**: Census tracts vary widely in size and population. Tract-level analysis masks variation within neighborhoods and cannot identify whether specific vulnerable populations (elderly residents, people with disabilities, households with medical equipment) faced disproportionate impacts. A tract could have high median income but still contain pockets of poverty.
+
+**Building classification**: OpenStreetMap data relies on crowd-sourced contributions, which may be incomplete or incorrectly classified. Some residential buildings may be missing from the database, and some commercial buildings may be misclassified as residential.
+
+Future research could:
+
+- Integrate finer-resolution income data or individual household characteristics
+- Analyze temporal patterns of power restoration (which areas got power back first?) to assess equity in recovery
+- Compare this storm to other infrastructure failures (Hurricane Harvey, Hurricane Ike) to identify chronic vulnerability hotspots
+- Use machine learning to distinguish residential versus commercial light sources in satellite imagery
+- Examine health outcomes, particularly for medically vulnerable populations requiring electricity for medical equipment
+- Conduct ground-truthing surveys to validate satellite-based estimates
+- Analyze the relationship between building age, insulation standards, and blackout impacts
+
+## Conclusion: Lessons from the Dark
+
+The February 2021 Texas winter storm revealed critical vulnerabilities in our energy infrastructure and raised important questions about equity and resilience. This geospatial analysis, combining satellite imagery with demographic data, found that over 168,000 Houston homes lost power—35% of the city's residences across 84% of census tracts.
+
+Contrary to expectations, higher-income census tracts experienced more widespread blackouts than lower-income areas, highlighting the complex relationship between socioeconomic status and infrastructure vulnerability. This finding doesn't diminish environmental justice concerns—low-income households may have suffered more severe consequences from the same duration of outage due to inadequate insulation, lack of backup heating, and limited resources—but it suggests that grid resilience doesn't simply track wealth. The pattern may reflect Houston's urban structure, energy demand distributions, or the specific nature of grid failures during this unprecedented event.
+
+As climate change drives more frequent extreme weather, the ability to rapidly assess disaster impacts using freely available satellite data becomes increasingly valuable. The techniques demonstrated here—combining remote sensing, crowdsourced geographic data, and census information—provide a replicable framework for analyzing infrastructure failures and targeting resilience investments. This methodology could be applied to other cities, other disaster types, or used for real-time emergency response coordination.
+
+The lights came back on in Houston, but the questions raised by this crisis remain. Texas's isolated grid continues to face vulnerability during peak demand events, and climate projections suggest both extreme cold and extreme heat events will become more frequent. Our analysis provides one lens for understanding what happened, who was affected, and where we should focus efforts to ensure that when the next storm comes, fewer people are left in the dark.
+
+Ultimately, resilience requires more than infrastructure—it demands understanding the geographic and social dimensions of vulnerability, investing in redundancy and weatherization, and ensuring that preparedness efforts protect all communities, not just the wealthy. 
+
+---
+
+## References
+
+Busby, J. W., Baker, K., Bazilian, M. D., Gilbert, A. Q., Grubert, E., Rai, V., Rhodes, J. D., Shidore, S., Smith, C. A., & Webber, M. E. (2021). Cascading risks: Understanding the 2021 winter blackout in Texas. *Energy Research & Social Science*, 77, 102106. https://doi.org/10.1016/j.erss.2021.102106
+
+Texas Department of State Health Services. (2021). *February 2021 Winter Storm-Related Deaths – Texas*. Retrieved from https://www.dshs.texas.gov/sites/default/files/news/updates/SMOC_FebWinterStorm_MortalitySurvReport_12-30-21.pdf
+
+NASA Earth Observatory. (2021). *VIIRS Nighttime Light Data*. Retrieved from https://earthobservatory.nasa.gov/
+
+OpenStreetMap Contributors. (2021). *Planet OSM*. Retrieved from https://planet.openstreetmap.org
+
+U.S. Census Bureau. (2019). *American Community Survey 5-Year Estimates*. Retrieved from https://www.census.gov/programs-surveys/acs
+
+---
+
+*This analysis was completed as part of EDS 223: Geospatial Analysis & Remote Sensing at the Bren School of Environmental Science & Management, UC Santa Barbara.*
